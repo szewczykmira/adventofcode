@@ -1,23 +1,24 @@
-def file_to_array
-  file = File.read('input.txt')
+def get_data(data=nil)
+  data ? data.chars : File.read('input.txt').chars
 end
 
 def main_func(data=nil)
-  unless data
-    data = file_to_array
-  end
-  data = data.chars
+  data = get_data(data)
   sum = 0
-  data.each_index do |elem|
-    next_elem = elem + 1 == data.length ? 0 : elem + 1
-    if data[elem] == data[next_elem]
-      sum += data[elem].to_i
+  data.each_index do |i|
+    if data[i].to_i == data[i-1].to_i
+      sum += data[i].to_i
     end
   end
   sum
 end
 
-puts main_func('1122')
-puts main_func('1111')
-puts main_func('1234')
-puts main_func('91212129')
+def test
+  raise unless main_func('1122') == 3
+  raise unless main_func('1111') == 4
+  raise unless main_func('1234') == 0
+  raise unless main_func('91212129') == 9
+end
+
+test
+puts main_func
