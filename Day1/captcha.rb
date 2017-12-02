@@ -1,5 +1,5 @@
 def get_data(data=nil)
-  data ? data.chars : File.read('input.txt').chars
+  data ? data.chars : File.read('input.txt').rstrip.chars
 end
 
 def main_func(data=nil)
