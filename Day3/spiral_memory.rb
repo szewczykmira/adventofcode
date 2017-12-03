@@ -43,8 +43,9 @@ end
 
 def spiral_memory(elem)
   side = sqrt(elem).ceil
-  center = find_center(side)
-  elem_position = find_position(elem, side)
+  center_row, center_cell = find_center(side)
+  elem_row, elem_cell = find_position(elem, side)
+  (center_row - elem_row).abs + (center_cell - elem_cell).abs
 end
 
 def test
@@ -80,3 +81,8 @@ end
 
 test_center
 test_position
+puts spiral_memory(1)
+puts spiral_memory(12)
+puts spiral_memory(23)
+puts spiral_memory(1024)
+puts spiral_memory(368078)
