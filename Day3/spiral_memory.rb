@@ -3,10 +3,6 @@ include Math
 # if the side is even its square is in 00
 # if square is odd square is in (side-1), (side-1)
 
-def find_side(elem)
-  sqrt(elem).ceil
-end
-
 def find_center(side)
   position = side / 2
   position = position - 1 if side.even?
@@ -36,7 +32,7 @@ def position_odd(elem, side)
     return [side - 1, 0]
   end
   if position <= half
-    return [position - side, 0]
+    return [position - 1, 0]
   end
   [side - 1, position - side]
 end
@@ -46,6 +42,9 @@ def find_position(elem, side)
 end
 
 def spiral_memory(elem)
+  side = sqrt(elem).ceil
+  center = find_center(side)
+  elem_position = find_position(elem, side)
 end
 
 def test
@@ -68,8 +67,16 @@ def test_position
   (print find_position(35, 6); raise) unless find_position(35, 6) == [0, 1]
   (print find_position(28, 6); raise) unless find_position(28, 6) == [3, 5]
   (print find_position(43, 7); raise) unless find_position(43, 7) == [6, 0]
-  (print find_position(40, 7); raise) unless find_position(40, 7) == [4, 1]
+  (print find_position(40, 7); raise) unless find_position(40, 7) == [3, 0]
   (print find_position(47, 7); raise) unless find_position(47, 7) == [6, 4]
+
+  (print find_position(15, 4); raise) unless find_position(15, 4) == [0, 1]
+  (print find_position(13, 4); raise) unless find_position(13, 4) == [0, 3]
+  (print find_position(11, 4); raise) unless find_position(11, 4) == [2, 3]
+  (print find_position(20, 5); raise) unless find_position(20, 5) == [3, 0]
+  (print find_position(21, 5); raise) unless find_position(21, 5) == [4, 0]
+  (print find_position(23, 5); raise) unless find_position(23, 5) == [4, 2]
 end
 
+test_center
 test_position
