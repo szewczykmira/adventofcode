@@ -23,7 +23,7 @@ def walk(blocks)
     current_blocks = redistribute(current_blocks)
     steps += 1
   end
-  steps
+  [steps, (compilations.length - compilations.find_index(current_blocks))]
 end
 
 
@@ -35,5 +35,5 @@ def test_redistribute
   raise unless redistribute([1,3,4,1]) == [2,4,1,2]
 end
 
-puts walk([0,2,7,0])
+puts walk [0,2,7,0]
 puts walk [5, 1, 10, 0, 1, 7, 13, 14, 3, 12, 8, 10, 7, 12, 0, 6]
