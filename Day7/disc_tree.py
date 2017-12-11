@@ -1,4 +1,4 @@
-from collections import namedtuple
+from collections import namedtuple, Counter
 
 Program = namedtuple('Program', ['weight', 'sons'])
 
@@ -12,10 +12,11 @@ class MemoryTree:
                     program, sons = line.split(self.ARROW)
                     sons = sons.strip().split(', ')
                 else:
-                    program = line
+                    program = line.strip()
                     sons = []
                 name, weight = program.split(' ')
-                self.TOWER[name] = Program(weight=weight[1:-1], sons=sons)
+                self.TOWER[name] = Program(
+                    weight=int(weight[1:-1].strip()), sons=sons)
 
     def __str__(self):
         return str(self.TOWER)
@@ -33,10 +34,17 @@ class MemoryTree:
             del self.TOWER[son]
 
     def find_father(self):
-        self.remove_sons()
-        if len(self.TOWER) == 1:
-            return list(self.TOWER.keys())[0]
+        return list(set(self.TOWER.keys()) - self.sons)[0]
 
+    def balance(self, elem):
+        elem = self.TOWER[elem]
+        sons = sum(self.balance(son) for son in elem.sons)
+        result = elem.weight + sons
+        return result
+
+    def find_balance(self, node):
+        node_elem = self.TOWER[node]
+        sons = [self.balance(son) for son in node_elem.sons]
 
 
 tree = MemoryTree()
