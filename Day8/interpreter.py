@@ -9,6 +9,7 @@ class CPU:
     STACK = {}
     INCREASE = 'inc'
     DECREASE = 'dec'
+    HIGHEST = 0
 
     EQ = '=='
     GTE = '>='
@@ -36,6 +37,8 @@ class CPU:
 
     def keep(self, register, elem):
         self.STACK[register] = elem
+        if elem > self.HIGHEST:
+            self.HIGHEST = elem
 
     def parse_information(self, line):
         line = line.strip().split(' ', 3)
@@ -62,3 +65,4 @@ class CPU:
 cpu = CPU('input.txt')
 cpu.calculate()
 print(max(cpu.STACK.values()))
+print(cpu.HIGHEST)
