@@ -14,6 +14,12 @@ class Grid:
     def __str__(self):
         return f'x:{self.x} y:{self.y}'
 
+    def tuple(self):
+        return (self.x, self.y)
+
+    def abs(self):
+        return Grid(abs(self.x), abs(self.y))
+
 NORTH = 'n'
 NORTH_STEP = Grid(0, 2)
 NORTHEAST = 'ne'
@@ -34,19 +40,12 @@ START = Grid(0, 0)
 
 def find_steps(position):
     steps = 0
-    current_position = position
-    if position.x < 0:
-        last = NORTH
-        if position.y > 0:
-            start = NORTHWEST
-        else:
-            start = NORTHEAST
-    else:
-        last = SOUTH
-        if position.y > 0:
-            start = SOUTHWEST
-        else:
-            start = SOUTHEAST
+    current_position = position.abs()
+    if current_position.x > current_position.y:
+        return current_position.x
+
+    start = SOUTHWEST
+    last = SOUTH
 
     while not current_position.x == 0:
         steps += 1
@@ -58,15 +57,28 @@ def find_steps(position):
 
     return steps
 
+
 def read_data(data='input.txt'):
     with open(data, 'r') as steps:
         return steps.readlines()[0].strip().split(',')
 
+def find_max(positions):
+    max_distance = 0
+    for position in positions:
+        position = Grid(*position)
+        distance = find_steps(position)
+        if distance > max_distance:
+            max_distance = distance
+    print('Max_distance', max_distance)
+
 def walk(steps):
     curr_position = START
+    positions = set()
     for step in steps:
         curr_position += STEPS[step]
+        positions.add(curr_position.tuple())
+    find_max(positions)
     return curr_position
 
-#print(find_steps(walk(['se','sw','se','sw','sw'])))
 print(find_steps(walk(read_data())))
+#print(walk(read_data()))
