@@ -39,23 +39,10 @@ STEPS = {NORTH: NORTH_STEP, NORTHEAST: NE_STEP, NORTHWEST: NW_STEP,
 START = Grid(0, 0)
 
 def find_steps(position):
-    steps = 0
     current_position = position.abs()
     if current_position.x > current_position.y:
         return current_position.x
-
-    start = SOUTHWEST
-    last = SOUTH
-
-    while not current_position.x == 0:
-        steps += 1
-        current_position += STEPS[start]
-
-    while not current_position.y == 0:
-        steps += 1
-        current_position += STEPS[last]
-
-    return steps
+    return current_position.x + (current_position.y - current_position.x) / 2
 
 
 def read_data(data='input.txt'):
@@ -81,4 +68,3 @@ def walk(steps):
     return curr_position
 
 print(find_steps(walk(read_data())))
-#print(walk(read_data()))
