@@ -22,9 +22,7 @@ class Firewall:
     def current_range_is_zero(self, layer, picoseconds):
         depth_range = self.firewall.get(layer)
         if not depth_range:
-            return None
-        if picoseconds == 0:
-            return True
+            return False
         will_be_zero_for = (depth_range - 1) * 2
         if picoseconds % will_be_zero_for == 0:
             return True
@@ -42,22 +40,25 @@ class Firewall:
     def clean_severity(self):
         self.SEVERITY = 0
 
-    def walk(self, delay=0):
+    def walk(self, delay=0, search=False):
         PICOSECONDS = 0 + delay
         for layer in range(0, self.last_layer+1):
             current_range = self.current_range_is_zero(layer, PICOSECONDS)
             if current_range:
                 self.get_cought(layer)
+                if search:
+                    return False
             PICOSECONDS += 1
+        return True
 
     def best_delay(self):
         for delay in count(1):
-            self.walk(delay)
-            if self.severity == 0:
-                return delay
-            self.clean_severity()
+            if not self.walk(delay, search=True):
+                self.clean_severity()
+                continue
+            return delay
 
 
-firewall = Firewall('test.txt')
-firewall.walk()
-print(firewall.severity)
+firewall = Firewall('input.txt')
+
+print(firewall.best_delay())
