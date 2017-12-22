@@ -1,26 +1,26 @@
 from itertools import count
+FIREWALL = {}
 
 class Firewall:
-    FIREWALL = {}
     SEVERITY = 0
 
     def __init__(self, input_data):
         with open(input_data, 'r') as firewall_input:
             for line in firewall_input.readlines():
                 line = line.strip().split(': ')
-                self.FIREWALL[int(line[0])] = int(line[-1])
+                FIREWALL[int(line[0])] = int(line[-1])
         self.last_layer = int(line[0])
 
     @property
     def firewall(self):
-        return self.FIREWALL
+        return FIREWALL
 
     @property
     def depths(self):
-        return list(sorted(self.FIREWALL.keys()))
+        return list(sorted(self.firewall.keys()))
 
     def current_range_is_zero(self, layer, picoseconds):
-        depth_range = self.FIREWALL.get(layer)
+        depth_range = self.firewall.get(layer)
         if not depth_range:
             return None
         if picoseconds == 0:
@@ -35,7 +35,7 @@ class Firewall:
         return self.SEVERITY
 
     def get_cought(self, depth):
-        depth_range = self.FIREWALL[depth]
+        depth_range = self.firewall[depth]
         severity = depth * depth_range
         self.SEVERITY += severity
 
@@ -59,4 +59,5 @@ class Firewall:
 
 
 firewall = Firewall('test.txt')
-print(firewall.best_delay())
+firewall.walk()
+print(firewall.severity)
