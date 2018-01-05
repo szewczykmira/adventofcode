@@ -1,3 +1,4 @@
+from collections import Counter
 from string import ascii_lowercase
 POSITIONS = ascii_lowercase[:16]
 
@@ -11,6 +12,11 @@ class Dancing:
         self.data = data
         items = items if items else POSITIONS
         self.items = list(items)
+        with open(self.data, 'r') as instructions:
+            for line in instructions.readlines():
+                line = line.strip()
+                steps = line.split(',')
+        self.steps = steps
 
     def take_step(self, step):
         what = step[0]
@@ -29,14 +35,18 @@ class Dancing:
             return
 
     def dance(self):
-        with open(self.data, 'r') as instructions:
-            for line in instructions.readlines():
-                line = line.strip()
-                steps = line.split(',')
-                for step in steps:
-                    self.take_step(step)
-        print(''.join(self.items))
+        for step in self.steps:
+            self.take_step(step)
+
+    def make_many(self, times=1000000000):
+        seen = []
+        for i in range(times):
+            if ''.join(self.items) in seen:
+                return seen[times % i]
+
+            seen.append(''.join(self.items))
+            self.dance()
 
 
 dancer = Dancing('input.txt')
-dancer.dance()
+print(dancer.make_many())
