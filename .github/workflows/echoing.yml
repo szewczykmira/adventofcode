@@ -1,6 +1,8 @@
 name: Run on label set
 
-on: [pull_request]
+on: 
+  label:
+    types: [created]
 
 jobs:
   build:
@@ -9,7 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       # Check-out repository
+      - name: Validate proper label set
+        if: github.event.label.name == "Land it!"
+
       - uses: actions/checkout@v2
+        with:
+          ref: "merge/${{github.base_ref}}/${{github.head_ref}}/${{github.sha}}"
 
       - name: greet
-        run: echo "${{github.base_ref}}/${{github.head_ref}}/${{github.sha}}"
+        run: echo "We are in here!"
