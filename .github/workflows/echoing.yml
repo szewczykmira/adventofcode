@@ -11,7 +11,12 @@ jobs:
 
     runs-on: ubuntu-latest
     steps: 
+      - name: Validate proper label
+      if: ${{github.pull_request.label.name}} == "No merge conflict"
+
       - uses: actions/checkout@v2
+      with:
+        ref: "merge/${{github.base_ref}}/${{github.head_ref}}/${{github.event.pull_request.head.sha}}""
 
       - name: greet
         run: echo "${{github.event.pull_request.head.sha}}"
