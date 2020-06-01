@@ -1,6 +1,6 @@
 name: Run on label set
 
-on: pull_request
+on: label
 
 
 jobs:
