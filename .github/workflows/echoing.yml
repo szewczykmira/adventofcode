@@ -12,6 +12,4 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: greet
-        run: echo "Hello ${INPUT_REF}"
-        with:
-          ref: helo
+        run: echo "${{github.base_ref}}/${{github.head_ref}}/${{github.sha}}"
