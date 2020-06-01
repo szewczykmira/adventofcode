@@ -1,6 +1,5 @@
-name: Echoing
+name: Run on label set
 
-# TODO: search proper options
 on: [pull_request]
 
 jobs:
@@ -13,4 +12,6 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: greet
-        run: echo "Hello my friend"
+        run: echo "Hello ${INPUT_REF}"
+        with:
+          ref: helo
