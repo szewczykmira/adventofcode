@@ -1,0 +1,23 @@
+name: Run on label set
+
+on:
+  label:
+    types: [created, deleted]
+
+
+jobs:
+  build:
+    name: Wow!
+
+    runs-on: ubuntu-latest
+    steps: 
+      # Check-out repository
+      - name: Validate proper label set
+        run: echo ${{github.event.label.name}}
+
+      - uses: actions/checkout@v2
+        with:
+          ref: "merge/${{github.base_ref}}/${{github.head_ref}}/${{github.sha}}"
+
+      - name: greet
+        run: echo "We are in here!"
