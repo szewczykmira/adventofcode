@@ -1,8 +1,6 @@
 name: Run on label set
 
-on:
-  label:
-    types: [created, deleted]
+on: pull_request
 
 
 jobs:
