@@ -1,0 +1,15 @@
+name: CI
+
+on: [pull_request]
+
+jobs:
+  build:
+    name: Greeting
+
+    runs-on: ubuntu-latest
+    steps: 
+      # Check-out repository
+      - uses: actions/checkout@v2
+
+      - name: greet
+        run: echo "Hello my friend"
