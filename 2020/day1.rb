@@ -18,7 +18,7 @@ def two
     File.read("input_1_2.txt").lines.lazy.map(&:to_i).each do |value|
         negative = EXPECTED_VALUE - value
         return [value, received_sums[negative]].flatten.reduce(:*) if received_sums.has_key? negative
-        received_sums.merge! (read_values.map { |v| [v+value, [v, value]]}.to_h)
+        read_values.each {|v| received_sums[v+value] = [v, value]}
         read_values << value
     end
 end
