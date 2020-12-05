@@ -1,4 +1,4 @@
-
+require 'set'
 
 def encode_seat(seat)
     row = seat[0..6].gsub("F", "0").gsub("B", "1").to_i(2)
@@ -11,7 +11,8 @@ def one
 end
 
 def two
-    File.read("input_5.txt").lines.map {|line| encode_seat line}.max
+    (45..953).to_set -  File.read("input_5.txt").lines.map {|line| encode_seat line}.to_set
 end
 
 p one
+p two
