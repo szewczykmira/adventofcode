@@ -6,7 +6,7 @@ def are_all(value)
 end
 
 def one
-  File.read("input_4_1.txt").split("\n\n").select { |obj| are_all obj }.count
+  File.read("input_4.txt").split("\n\n").select { |obj| are_all obj }.count
 end
 
 def validate_height(value)
@@ -32,7 +32,7 @@ def full_validation(value)
 end
 
 def two
-  File.read("input_4_2.txt").split("\n\n").select { |obj| (are_all obj) and (full_validation obj) }.count
+  File.read("input_4.txt").split("\n\n").select { |obj| (are_all obj) and (full_validation obj) }.count
 end
 
 p one

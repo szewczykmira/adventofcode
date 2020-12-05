@@ -7,11 +7,11 @@ def many_under(filename, slope, many)
 end
 
 def one
-  many_under("input_3_1.txt", 3, 1)
+  many_under("input_3.txt", 3, 1)
 end
 
 def two
-  filename = "input_3_2.txt"
+  filename = "input_3.txt"
   walks = [[1, 1], [3, 1], [5, 1], [7, 1], [1, 2]]
   walks.map { |right, under| many_under(filename, right, under) }.reduce(:*)
 end

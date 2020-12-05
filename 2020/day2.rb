@@ -15,11 +15,11 @@ def validator(filename, &func)
 end
 
 def one
-  validator("input_2_1.txt", &method(:is_valid_1))
+  validator("input_2.txt", &method(:is_valid_1))
 end
 
 def two
-  validator("input_2_2.txt", &method(:is_valid_2))
+  validator("input_2.txt", &method(:is_valid_2))
 end
 
 puts one
