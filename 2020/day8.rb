@@ -33,6 +33,7 @@ def one
   visited = [lines[0]]
   visited.each do |obj|
     break if obj.counter == 1
+
     index, acc = obj.call(index, acc)
     visited << lines[index]
   end
@@ -46,6 +47,7 @@ def walk(lines)
   visited.each do |obj|
     break if obj.nil?
     return if obj.counter == 1
+
     index, acc = obj.call(index, acc)
     visited << lines[index]
   end
@@ -57,10 +59,12 @@ def two
   acc = 0
   lines.each_with_index do |obj, index|
     next if obj.type == "acc"
+
     obj.toggle
     acc = walk(lines)
     obj.toggle
     break unless acc.nil?
+
     lines.map(&:clean)
   end
   acc
