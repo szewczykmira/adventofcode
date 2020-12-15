@@ -1,7 +1,5 @@
 FILE_INPUT = "input_12.txt"
 
-REGEX = /(\w)(\d+)/
-
 class Coordinates
   attr_reader :north, :east, :current_direction
 
@@ -69,7 +67,7 @@ end
 
 def one
   instruction = Coordinates.new
-  File.read(FILE_INPUT).lines.map { |coord| coord.strip.match(REGEX).captures }.each do |direction, steps|
+  File.read(FILE_INPUT).lines.map { |coord| coord.strip.match(/(\w)(\d+)/).captures }.each do |direction, steps|
     steps = steps.to_i
     case direction
     when "N"
