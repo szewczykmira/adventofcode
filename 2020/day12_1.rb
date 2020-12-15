@@ -1,5 +1,3 @@
-FILE_INPUT = "input_12.txt"
-
 class Coordinates
   attr_reader :north, :east, :current_direction
 
@@ -64,31 +62,3 @@ class Coordinates
     @north.abs + @east.abs
   end
 end
-
-def one
-  instruction = Coordinates.new
-  File.read(FILE_INPUT).lines.map { |coord| coord.strip.match(/(\w)(\d+)/).captures }.each do |direction, steps|
-    steps = steps.to_i
-    case direction
-    when "N"
-      instruction.move_north(steps)
-    when "S"
-      instruction.move_south(steps)
-    when "W"
-      instruction.move_west(steps)
-    when "E"
-      instruction.move_east(steps)
-    when "F"
-      instruction.move_forward(steps)
-    when "L"
-      instruction.move_left(steps)
-    when "R"
-      instruction.move_right(steps)
-    else
-      p direction
-    end
-  end
-  instruction.manhattan_distance
-end
-
-p one
