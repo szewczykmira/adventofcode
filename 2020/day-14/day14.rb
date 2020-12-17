@@ -32,7 +32,7 @@ def genarate_all_masks(line)
   indexes_of_x = o_mask.filter { |index, o| o == "X" }.keys
   indexes_of_x.each { |index| o_mask[index] = "0" }
   (1..(indexes_of_x.count)).each do |it|
-    perms = indexes_of_x.permutation(it)
+    perms = indexes_of_x.combination(it)
     perms.each do |indexes|
       c_mask = o_mask.dup
       indexes.each do |index|
