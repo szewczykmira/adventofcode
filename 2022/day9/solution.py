@@ -63,6 +63,14 @@ class Position:
 INPUT_FILE = "input.txt"
 
 head = Position(0, 0)
+part_1 = Position(0, 0)
+part_2 = Position(0, 0)
+part_3 = Position(0, 0)
+part_4 = Position(0, 0)
+part_5 = Position(0, 0)
+part_6 = Position(0, 0)
+part_7 = Position(0, 0)
+part_8 = Position(0, 0)
 tail = Position(0, 0)
 
 with open(INPUT_FILE) as directions:
@@ -79,7 +87,15 @@ with open(INPUT_FILE) as directions:
                     head.move_up()
                 case "D":
                     head.move_down()
-            tail.keep_up(head)
+            part_1.keep_up(head)
+            part_2.keep_up(part_1)
+            part_3.keep_up(part_2)
+            part_4.keep_up(part_3)
+            part_5.keep_up(part_4)
+            part_6.keep_up(part_5)
+            part_7.keep_up(part_6)
+            part_8.keep_up(part_7)
+            tail.keep_up(part_8)
             print(f"H: {head.repr} T:{tail.repr}")
 
 print(len(tail.visited))
