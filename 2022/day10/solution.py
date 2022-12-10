@@ -1,6 +1,6 @@
 from pprint import pprint
 
-INPUT_FILE = "test_input.txt"
+INPUT_FILE = "input.txt"
 
 X = 1
 CYCLE = 0
@@ -12,14 +12,14 @@ values = []
 CRT = [["."] * 40 for _ in range(6)]
 
 
-def check_cycle(x: int):
+def check_cycle():
     if CYCLE in searched_cycles:
         values.append(X)
-    _, x_mod = divmod(X, 40)
-    c_div, c_mod = divmod(CYCLE - 1, 40)
-    if c_mod in [x_mod - 1, x_mod + 1, x_mod]:
+    c_div, c_mod = divmod(CYCLE, 40)
+    # options = [(X - 1) % 40, X % 40, (X+1) % 40]
+    options = [X % 40, (X + 1) % 40, (X+2) % 40]
+    if c_mod in options:
         CRT[c_div][c_mod - 1] = "#"
-    print(f"DRAW! {CYCLE} {X} {CRT[c_div][c_mod - 1]}")
 
 
 with open(INPUT_FILE) as instructions:
@@ -27,11 +27,11 @@ with open(INPUT_FILE) as instructions:
         match instruction.strip().split(" "):
             case [noop]:
                 CYCLE += 1
-                check_cycle(X)
+                check_cycle()
             case ["addx", value]:
                 for _ in range(2):
                     CYCLE += 1
-                    check_cycle(X)
+                    check_cycle()
                 X += int(value)
 
 
