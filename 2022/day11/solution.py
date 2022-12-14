@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from itertools import cycle
+from math import lcm
 from operator import mul, add
 from typing import Callable, Dict, List, Tuple
 
@@ -18,23 +19,25 @@ class Monkey:
     if_false: int
     count: int = field(init=False, default=0)
 
-    def inspect_item(self, worry_level: int) -> Tuple[int, int]:
+    def inspect_item(self, worry_level: int, _lcm: int) -> Tuple[int, int]:
+        print(f"Item {worry_level}")
         self.count += 1
         op, value = self.operation
         value = worry_level if value == "old" else int(value)
-        worry_level = op(worry_level, value) // 3
+        worry_level = op(worry_level, value)
         if (worry_level % self.divisible_by) == 0:
             return self.if_true, worry_level
-        return self.if_false, worry_level
+        return self.if_false, worry_level % _lcm
 
     def catch_element(self, worry_level: int):
-        self.items.append(worry_level)
+        self.items.append(worry_level )
 
     def summary(self):
         return f"Monkey {self.name} inspected items {self.count} times."
 
 
 monkeys: Dict[int, Monkey] = dict()
+divide_by = []
 
 
 def parse_name(item: str):
@@ -51,7 +54,9 @@ def parse_operation(line: str):
 
 
 def get_test(line: str):
-    BUFFER.append(int(line.strip().removeprefix("Test: divisible by ")))
+    val = int(line.strip().removeprefix("Test: divisible by "))
+    divide_by.append(val)
+    BUFFER.append(val)
 
 
 def throw_to_monkey(line: str):
@@ -76,11 +81,10 @@ def sumup(line):
     BUFFER.clear()
 
 
-def round(monkey: Monkey):
+def round(monkey: Monkey, _lcm):
     while monkey.items:
-        throw_to, worry_level = monkey.inspect_item(monkey.items.pop(0))
+        throw_to, worry_level = monkey.inspect_item(monkey.items.pop(0), _lcm)
         monkeys[throw_to].catch_element(worry_level)
-
 
 with open(INPUT_FILE) as flying_monkeys:
     for line, func in zip(
@@ -100,9 +104,13 @@ with open(INPUT_FILE) as flying_monkeys:
         func(line)
 sumup("")
 
-for _ in range(20):
+LCM = lcm(*divide_by)
+
+for i in range(10000):
+    print(f"New round! {i}")
     for monkey in monkeys.values():
-        round(monkey)
+        print(f"Monkey {monkey.name}")
+        round(monkey, LCM)
 
 x1, x2 = sorted([x.count for x in monkeys.values()], reverse=True)[:2]
 
